@@ -26,8 +26,10 @@ export const fetchPlugin = (input: string) => {
                 //unpkg auto redirect to correct folder. We can get the redirected url to figure out the correct folder to look into
                 const { data, request } = await axios.get(args.path);
 
+                const loader = args.path.match(/.css$/) ? 'css' : 'jsx';
+
                 const result: esbuild.OnLoadResult = {
-                    loader: 'jsx',
+                    loader: loader,
                     contents: data,
                     //saves the correct url to be used later
                     resolveDir: new URL('./', request.responseURL).pathname,
