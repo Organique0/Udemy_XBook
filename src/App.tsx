@@ -4,10 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
 import { fetchPlugin } from './plugins/fetch-plugin';
 
+
 function App() {
   const [input, setInput] = useState("");
-  const [code, setCode] = useState("");
-
   const ref = useRef<any>();
   const iFrame = useRef<any>();
 
@@ -28,7 +27,7 @@ function App() {
       return;
     }
 
-    iFrame.current.src = html;
+    iFrame.current.srcdoc = html;
 
     const result = await ref.current.build({
       entryPoints: ['index.js'],
@@ -49,7 +48,7 @@ function App() {
     <html>
       <head></head>
       <body>
-        <div id="root">${code}</div>
+        <div id="root"></div>
         <script>
         window.addEventListener('message', (event) => {
           try {
@@ -67,7 +66,7 @@ function App() {
 
   return (
     <div>
-      <textarea cols={60} rows={15} onChange={e => setInput(e.target.value)}></textarea>
+      <textarea value={input} cols={60} rows={15} onChange={e => setInput(e.target.value)}></textarea>
       <div>
         <button onClick={onClick}>Submit</button>
       </div>
