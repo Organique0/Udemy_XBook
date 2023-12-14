@@ -9,6 +9,7 @@ function App() {
   const [code, setCode] = useState("");
 
   const ref = useRef<any>();
+  const iFrame = useRef<any>();
 
   useEffect(() => {
     startService();
@@ -27,6 +28,8 @@ function App() {
       return;
     }
 
+    iFrame.current.src = html;
+
     const result = await ref.current.build({
       entryPoints: ['index.js'],
       bundle: true,
@@ -38,16 +41,37 @@ function App() {
       }
     })
 
-    setCode(result.outputFiles[0].text);
+    //setCode(result.outputFiles[0].text);
+    iFrame.current.contentWindow.postMessage(result.outputFiles[0].text, '*');
   }
+
+  const html = `
+    <html>
+      <head></head>
+      <body>
+        <div id="root">${code}</div>
+        <script>
+        window.addEventListener('message', (event) => {
+          try {
+            eval(event.data);
+          } catch (err) {
+            const root = document.querySelector('#root');
+            root.innerHTML = '<div style="color: red;"><h4>Runtime Error</h4>' + err + '</div>';
+            console.error(err);
+          }
+        }, false);
+        </script>
+      </body>
+    </html>
+  `
 
   return (
     <div>
-      <textarea onChange={e => setInput(e.target.value)}></textarea>
+      <textarea cols={60} rows={15} onChange={e => setInput(e.target.value)}></textarea>
       <div>
         <button onClick={onClick}>Submit</button>
       </div>
-      <pre>{code}</pre>
+      <iframe title='preview' ref={iFrame} sandbox='allow-scripts' srcDoc={html} />
     </div>
   )
 }

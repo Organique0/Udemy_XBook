@@ -6,3 +6,7 @@ body {
 pre {
   background-color: gainsboro;
 }
+
+iframe {
+  background-color: white;
+}
