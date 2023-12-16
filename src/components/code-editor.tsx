@@ -295,7 +295,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
                 beforeMount={handleEditorWillMount}
                 value={initialValue}
                 height="500px"
-                language='javascriptreact'
+                language='javascript'
                 theme={'myCustomTheme'}
                 loading="hello, wait just a second..."
                 options={{
