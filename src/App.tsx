@@ -1,9 +1,9 @@
 import * as esbuild from 'esbuild-wasm';
 import { useEffect, useRef, useState } from "react";
-
+import CodeEditor from './components/code-editor';
 import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
 import { fetchPlugin } from './plugins/fetch-plugin';
-
+import 'bulmaswatch/superhero/bulmaswatch.min.css';
 
 function App() {
   const [input, setInput] = useState("");
@@ -66,6 +66,13 @@ function App() {
 
   return (
     <div>
+      <CodeEditor
+        initialValue={`const app = () => { 
+  return (
+    <div>hello</div>
+    )
+  }`}
+        onChange={(value) => setInput(value)} />
       <textarea value={input} cols={60} rows={15} onChange={e => setInput(e.target.value)}></textarea>
       <div>
         <button onClick={onClick}>Submit</button>
