@@ -11,7 +11,7 @@ interface ResizableProps {
 const Resizable: React.FC<ResizableProps> = ({ direction, children, /* onResizing */ }) => {
     const [Wheight, setWheight] = useState(window.innerHeight);
     const [Wwidth, setWwidth] = useState(window.innerWidth);
-    const [width, setWidth] = useState(window.innerWidth * 0.75);
+    const [width, setWidth] = useState(window.innerWidth * 0.65);
 
     useEffect(() => {
         let timer: any;
@@ -23,8 +23,8 @@ const Resizable: React.FC<ResizableProps> = ({ direction, children, /* onResizin
                 setWheight(window.innerHeight);
                 setWwidth(window.innerWidth);
                 //console.log(window.innerWidth * 0.85, width);
-                if (window.innerWidth * 0.85 < width) {
-                    setWidth(window.innerWidth * 0.85);
+                if (window.innerWidth * 0.65 < width) {
+                    setWidth(window.innerWidth * 0.65);
                 }
             }, 80);
 
@@ -44,7 +44,7 @@ const Resizable: React.FC<ResizableProps> = ({ direction, children, /* onResizin
             height: Infinity,
             width: width,
             resizeHandles: ['e'],
-            minConstraints: [Wwidth * 0.2, Infinity],
+            minConstraints: [Wwidth * 0.25, Infinity],
             maxConstraints: [Wwidth * 0.75, Infinity],
             onResizeStop: (_event, data) => {
                 setWidth(data.size.width);
