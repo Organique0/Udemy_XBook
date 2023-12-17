@@ -1,45 +1,57 @@
-import * as React from 'react';
-import { useEffect } from 'react';
+
+import { useEffect, useState, useRef } from 'react';
 import './preview.css';
-const html = `
-    <html>
-      <head>
-        <style>html {background-color:gainsboro}</style>
-      </head>
-      <body>
-        <div id="root"></div>
-        <script>
-        window.addEventListener('message', (event) => {
-          try {
-            eval(event.data);
-          } catch (err) {
-            const root = document.querySelector('#root');
-            root.innerHTML = '<div style="color: red;"><h4>Runtime Error</h4>' + err + '</div>';
-            console.error(err);
-          }
-        }, false);
-        </script>
-      </body>
-    </html>
-  `
+
 
 interface PreviewProps {
   code: string;
+  bundleError: string | undefined;
 }
 
-const Preview: React.FC<PreviewProps> = ({ code }) => {
-  const iFrame = React.useRef<any>();
+const Preview: React.FC<PreviewProps> = ({ code, bundleError }) => {
+  const iFrame = useRef<any>();
+  const htmlFileRef = useRef<string>();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  //all of this just because I want to have html in a separate file
+  async function fetchHtml() {
+    try {
+      const response = await fetch(`IFrameHTML.html`);
+      if (response.ok) {
+        const html = await response.text();
+        htmlFileRef.current = html; // Store HTML content in the ref
+      } else {
+        throw new Error('Failed to fetch HTML');
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
-    iFrame.current.srcdoc = html;
-    setTimeout(() => {
-      iFrame.current.contentWindow.postMessage(code, '*');
-    }, 50)
+    async function fetchData() {
+      setLoading(true);
+      await fetchHtml();
+    }
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (iFrame.current && htmlFileRef.current) {
+      iFrame.current.srcdoc = htmlFileRef.current; // Update iframe srcdoc
+      setTimeout(() => {
+        iFrame.current.contentWindow.postMessage(code, '*');
+      }, 20);
+    }
   }, [code]);
 
   return (
     <div className='preview-wrapper'>
-      <iframe title='preview' ref={iFrame} sandbox='allow-scripts' srcDoc={html} />
+      <iframe title='preview' ref={iFrame} sandbox='allow-scripts' srcDoc={htmlFileRef.current} />
+      {bundleError && <div className='preview-error'>{bundleError}</div>}
+      {loading && <div className='preview-loading'>Loading...</div>}
     </div>
 
   )

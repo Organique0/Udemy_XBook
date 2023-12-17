@@ -1,0 +1,37 @@
+<html>
+
+<head>
+    <style>
+        html {
+            background-color: gainsboro;
+            font-family: Consolas;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script>
+        const handleError = (err) => {
+            const root = document.querySelector('#root');
+            root.innerHTML = '<div style="color:#dd3838;"><h4>Runtime Error</h4>' + err + '</div>';
+            console.error(err);
+        }
+        window.addEventListener('error', (event) => {
+            event.preventDefault();
+            handleError(event.error);
+        })
+
+        window.addEventListener('message', (event) => {
+            try {
+                eval(event.data);
+            } catch (err) {
+                handleError(err);
+            }
+        }, false);
+    </script>
+</body>
+
+</html>
