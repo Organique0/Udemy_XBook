@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { useEffect } from 'react';
-
+import './preview.css';
 const html = `
     <html>
-      <head></head>
+      <head>
+        <style>html {background-color:gainsboro}</style>
+      </head>
       <body>
         <div id="root"></div>
         <script>
@@ -30,11 +32,16 @@ const Preview: React.FC<PreviewProps> = ({ code }) => {
 
   useEffect(() => {
     iFrame.current.srcdoc = html;
-    iFrame.current.contentWindow.postMessage(code, '*');
+    setTimeout(() => {
+      iFrame.current.contentWindow.postMessage(code, '*');
+    }, 50)
   }, [code]);
 
   return (
-    <iframe title='preview' ref={iFrame} sandbox='allow-scripts' srcDoc={html} />
+    <div className='preview-wrapper'>
+      <iframe title='preview' ref={iFrame} sandbox='allow-scripts' srcDoc={html} />
+    </div>
+
   )
 }
 
