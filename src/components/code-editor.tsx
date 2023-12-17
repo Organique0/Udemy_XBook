@@ -3,10 +3,10 @@ import prettier from 'prettier';
 import CustomTheme from '../../CustomTheme';
 import parser from 'prettier/parser-babel';
 import { useEffect, useRef } from 'react';
-import './code-editor.css';
+import '../styles/code-editor.css';
 import { emmetJSX } from 'emmet-monaco-es';
 import { editor } from 'monaco-editor';
-import './syntax.css';
+import '../styles/syntax.css';
 //import * as monaco from 'monaco-editor';
 
 /* import Hightlighter from 'monaco-jsx-highlighter';
