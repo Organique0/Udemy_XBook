@@ -1,0 +1,27 @@
+
+.JSXElement.JSXText {
+  color: white !important;
+}
+
+.mtk9 {
+  color:darkorange !important;
+}
+
+.mtk1 {
+  color: rgb(244, 208, 77) !important;
+}
+
+.mtk5 {
+  color: rgb(192 255 133) !important;
+}
+
+.JSXElement.JSXBracket, .JSXElement.JSXIdentifier {
+  color: rgb(26, 179, 230) !important;
+}
+
+.mtk8 {
+  color: rgb(107, 107, 107) !important;
+}
+
+
+

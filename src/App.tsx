@@ -5,6 +5,12 @@ import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
 import { fetchPlugin } from './plugins/fetch-plugin';
 import 'bulmaswatch/superhero/bulmaswatch.min.css';
 
+//for some reason this is super important for jsx syntax highlighting 
+//why? why? why? why?
+import { Buffer } from 'buffer';
+// @ts-expect-error okokok
+window.Buffer = Buffer;
+
 function App() {
   const [input, setInput] = useState("");
   const ref = useRef<any>();
