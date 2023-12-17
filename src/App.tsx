@@ -1,89 +1,18 @@
-import * as esbuild from 'esbuild-wasm';
-import { useEffect, useRef, useState } from "react";
-import CodeEditor from './components/code-editor';
-import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
-import { fetchPlugin } from './plugins/fetch-plugin';
 import 'bulmaswatch/superhero/bulmaswatch.min.css';
+import CodeCell from './components/code-cell';
 
 //for some reason this is super important for jsx syntax highlighting 
-//why? why? why? why?
+//why? I don't know really
 import { Buffer } from 'buffer';
-// @ts-expect-error okokok
+// @ts-expect-error ts does not know about it
 window.Buffer = Buffer;
 
 function App() {
-  const [input, setInput] = useState("");
-  const ref = useRef<any>();
-  const iFrame = useRef<any>();
-
-  useEffect(() => {
-    startService();
-  }, []);
-
-  const startService = async () => {
-    ref.current = await esbuild.startService({
-      worker: true,
-      wasmURL: 'https://unpkg.com/esbuild-wasm@0.8.27/esbuild.wasm',
-    });
-  }
-
-
-  const onClick = async () => {
-    if (!ref.current) {
-      return;
-    }
-
-    iFrame.current.srcdoc = html;
-
-    const result = await ref.current.build({
-      entryPoints: ['index.js'],
-      bundle: true,
-      write: false,
-      plugins: [unpkgPathPlugin(), fetchPlugin(input)],
-      define: {
-        'process.env.NODE_ENV': '"production"',
-        global: 'window'
-      }
-    })
-
-    //setCode(result.outputFiles[0].text);
-    iFrame.current.contentWindow.postMessage(result.outputFiles[0].text, '*');
-  }
-
-  const html = `
-    <html>
-      <head></head>
-      <body>
-        <div id="root"></div>
-        <script>
-        window.addEventListener('message', (event) => {
-          try {
-            eval(event.data);
-          } catch (err) {
-            const root = document.querySelector('#root');
-            root.innerHTML = '<div style="color: red;"><h4>Runtime Error</h4>' + err + '</div>';
-            console.error(err);
-          }
-        }, false);
-        </script>
-      </body>
-    </html>
-  `
 
   return (
     <div>
-      <CodeEditor
-        initialValue={`const app = () => { 
-  return (
-    <div>hello</div>
-    )
-  }`}
-        onChange={(value) => setInput(value)} />
-      <textarea value={input} cols={60} rows={15} onChange={e => setInput(e.target.value)}></textarea>
-      <div>
-        <button onClick={onClick}>Submit</button>
-      </div>
-      <iframe title='preview' ref={iFrame} sandbox='allow-scripts' srcDoc={html} />
+      <CodeCell />
+      <CodeCell />
     </div>
   )
 }
