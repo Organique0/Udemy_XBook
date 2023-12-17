@@ -111,7 +111,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
                 loading="hello, wait just a second..."
                 options={{
                     fontLigatures: true,
-                    fontFamily: 'Fira Code', //nope
+                    fontFamily: 'Fira Code',
                     wordWrap: 'on',
                     minimap: { enabled: false },
                     showUnused: false,
