@@ -1,5 +1,7 @@
 import 'bulmaswatch/superhero/bulmaswatch.min.css';
 import CodeCell from './components/code-cell';
+import { Provider } from 'react-redux';
+import { store } from './states';
 
 //for some reason this is super important for jsx syntax highlighting 
 //why? I don't know really
@@ -11,10 +13,12 @@ window.Buffer = Buffer;
 function App() {
 
   return (
-    <div>
-      <TextEditor />
-      <CodeCell />
-    </div>
+    <Provider store={store}>
+      <div>
+        <TextEditor />
+        <CodeCell />
+      </div>
+    </Provider>
   )
 }
 
