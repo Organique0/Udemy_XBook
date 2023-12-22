@@ -20,7 +20,7 @@ const initialState: CellState = {
     order: [],
 };
 
-const Cellreducer = produce((state: CellState = initialState, action: Action) => {
+const CellReducer = produce((state: CellState = initialState, action: Action) => {
     switch (action.type) {
         case ActionType.UPDATE_CELL:
             const { id, content } = action.payload;
@@ -81,4 +81,4 @@ const randomId = () => {
     return Math.random().toString(36).substring(2, 5);
 }
 
-export default Cellreducer;
+export default CellReducer;
