@@ -12,6 +12,7 @@
   "dependencies": {
     "@babel/parser": "^7.23.6",
     "@babel/traverse": "^7.23.6",
+    "@fortawesome/fontawesome-free": "^5.15.1",
     "@monaco-editor/react": "^4.6.0",
     "@types/jscodeshift": "0.7.2",
     "@types/prettier": "^2.7.3",

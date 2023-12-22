@@ -7,17 +7,24 @@ import Resizable from "./resizable";
 //why? why? why? why?
 import { Buffer } from 'buffer';
 import Preview from './preview';
+import { Cell } from "../states";
+import { useAction } from "./hooks/use-action";
 // @ts-expect-error okokok
 window.Buffer = Buffer;
 
-function CodeCell() {
-    const [input, setInput] = useState("");
+interface CodeCellProps {
+    cell: Cell,
+}
+
+const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
     const [code, setCode] = useState('');
     const [err, setErr] = useState('');
 
+    const { updateCell } = useAction();
+
     useEffect(() => {
         const timer = setTimeout(async () => {
-            const output = await bundle(input);
+            const output = await bundle(cell.content);
             setCode(output.code);
             setErr(output.err);
         }, 1000);
@@ -25,11 +32,11 @@ function CodeCell() {
         return () => {
             clearTimeout(timer);
         }
-    }, [input]);
+    }, [cell.content]);
 
     //my solution for changing element on resizing
     //using css is probable a better idea. mine was a bit laggy at times
-    //btw, the whole reason for that is the fact that we don't want our cursor ->
+    //btw, the whole reason for this is the fact that we don't want our cursor ->
     //->to go into the iframe when resizing
     /*     const [resizing, setResizing] = useState(false);
     
@@ -42,12 +49,8 @@ function CodeCell() {
             <div style={{ height: "100%", display: "flex", flexDirection: "row" }}>
                 <Resizable direction='horizontal' >
                     <CodeEditor
-                        initialValue={`const app = () => {
-  return (
-    <div>hello</div>
-    )
-  }`}
-                        onChange={(value) => setInput(value)} />
+                        initialValue={cell.content}
+                        onChange={(value) => updateCell(cell.id, value)} />
                 </Resizable>
                 {/* {!resizing ? <Preview code={code} /> : <div>hello</div>} */}
                 {<Preview code={code} bundleError={err} />}
