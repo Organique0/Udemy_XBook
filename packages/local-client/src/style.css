@@ -8,3 +8,7 @@ textarea {
   background-color: gainsboro;
 }
 
+.wmde-markdown {
+  all:unset;
+}
+
