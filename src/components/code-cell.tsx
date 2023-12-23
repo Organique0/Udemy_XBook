@@ -9,6 +9,7 @@ import { Cell } from "../states";
 import { useAction } from "./hooks/use-action";
 import { useTypedSelector } from "./hooks/use-typed-selector";
 import '../styles/code-cell.css';
+import { useCumulativeCode } from "./hooks/use-cumulative-code";
 
 //important for jsx syntax highlighting
 window.Buffer = Buffer;
@@ -20,21 +21,22 @@ interface CodeCellProps {
 const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
     const { updateCell, createBundle } = useAction();
     const bundle = useTypedSelector(state => state.bundles[cell.id]);
+    const cumulativeCode = useCumulativeCode(cell.id)
 
     useEffect(() => {
         if (!bundle) {
-            createBundle(cell.id, cell.content);
+            createBundle(cell.id, cumulativeCode);
             return;
         }
         const timer = setTimeout(async () => {
-            createBundle(cell.id, cell.content);
+            createBundle(cell.id, cumulativeCode);
         }, 1000);
 
         return () => {
             clearTimeout(timer);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [cell.content, cell.id, createBundle]);
+    }, [cumulativeCode, cell.id, createBundle]);
 
     //my solution for changing element on resizing
     //using css is probable a better idea. mine was a bit laggy at times
