@@ -1,53 +1,16 @@
 {
-  "name": "jbook",
+  "name": "root",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "version": "1.0.0",
   "scripts": {
-    "dev": "vite --mode development",
-    "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@babel/parser": "^7.23.6",
-    "@babel/traverse": "^7.23.6",
-    "@fortawesome/fontawesome-free": "^5.15.1",
-    "@monaco-editor/react": "^4.6.0",
-    "@types/jscodeshift": "0.7.2",
-    "@types/prettier": "^2.7.3",
-    "@types/react-redux": "7.1.33",
-    "@types/react-resizable": "3.0.2",
-    "@uiw/react-md-editor": "2.1.1",
-    "axios": "^1.6.2",
-    "buffer": "^6.0.3",
-    "bulmaswatch": "^0.8.1",
-    "emmet-monaco-es": "^5.3.0",
-    "esbuild-wasm": "0.8.27",
-    "immer": "^10.0.3",
-    "jscodeshift": "0.11.0",
-    "localforage": "^1.10.0",
-    "monaco-editor": "^0.45.0",
-    "monaco-jsx-highlighter": "^2.0.4",
-    "prettier": "^2.8.8",
-    "prop-types": "^15.8.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-redux": "9.0.4",
-    "react-resizable": "3.0.4",
-    "redux": "5.0.0",
-    "redux-thunk": "3.1.0"
+    "start": "lerna run start --parallel"
   },
   "devDependencies": {
-    "@types/react": "^18.2.43",
-    "@types/react-dom": "^18.2.17",
-    "@typescript-eslint/eslint-plugin": "^6.14.0",
-    "@typescript-eslint/parser": "^6.14.0",
-    "@vitejs/plugin-react": "^4.2.1",
-    "eslint": "^8.55.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.5",
-    "typescript": "^5.2.2",
-    "vite": "^5.0.8"
-  }
+    "lerna": "^8.0.1"
+  },
+  "workspaces": [
+    "packages/local-client",
+    "packages/cli",
+    "packages/local-api"
+  ]
 }
