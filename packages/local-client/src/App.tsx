@@ -9,7 +9,7 @@ import CellList from './components/cell-list';
 //for some reason this is super important for jsx syntax highlighting 
 //why? I don't know really
 import { Buffer } from 'buffer';
-// @ts-expect-error ts does not know about it
+
 window.Buffer = Buffer;
 
 function App() {
