@@ -33,8 +33,6 @@ const TextEditor: React.FC<TextCellProps> = ({ cell }) => {
         return (
             <div ref={ref} className='text-editor'>
                 <MDEditor value={cell.content} onChange={(v) => { updateCell(cell.id, v || '') }} />
-                <button onClick={() => setEditing(false)}>Save</button>
-                <button onClick={() => setEditing(false)}>Cancel</button>
             </div>
         )
     }
