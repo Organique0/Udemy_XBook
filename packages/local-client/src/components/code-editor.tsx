@@ -1,4 +1,4 @@
-import MonacoEditor, { useMonaco, loader, OnMount, BeforeMount } from '@monaco-editor/react';
+import MonacoEditor, { OnMount, BeforeMount } from '@monaco-editor/react';
 import prettier from 'prettier';
 import CustomTheme from '../../CustomTheme';
 import parser from 'prettier/parser-babel';
@@ -17,8 +17,6 @@ interface CodeEditorProps {
     initialValue: string,
     onChange: (value: string) => void,
 }
-
-import { JSXTypes } from 'monaco-jsx-highlighter';
 
 const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
     const editorRef = useRef<any>();
