@@ -10,3 +10,4 @@ Run 'npx xnote serve' to install and start the server then navigate to the given
 
 ===========
 
+Github: https://github.com/Organique0/Udemy_XNote.git
