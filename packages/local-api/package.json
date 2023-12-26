@@ -1,6 +1,6 @@
 {
   "name": "@xnote/local-api",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "publishConfig": {
     "access": "public"
   },
@@ -22,7 +22,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@xnote/local-client": "^1.0.4",
+    "@xnote/local-client": "^1.0.6",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "http-proxy-middleware": "^2.0.6"
